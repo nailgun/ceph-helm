@@ -5,7 +5,7 @@ metadata:
     name: {{ .Values.storageclass.name }}
 provisioner: kubernetes.io/rbd
 parameters:
-    monitors: {{ .Values.service.mon.name }}.{{ .Release.Namespace }}:{{ .Values.service.mon.port }}
+    monitors: {{ .Values.service.mon.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.mon.port }}
     adminId: {{ .Values.storageclass.admin_id }}
     adminSecretName: {{ .Values.storageclass.admin_secret_name }}
     adminSecretNamespace: {{ .Release.Namespace }}
