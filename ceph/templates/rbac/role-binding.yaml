@@ -4,7 +4,7 @@ metadata:
   name: ceph-mon
 subjects:
 - kind: ServiceAccount
-  name: ceph-mon
+  name: pod-reader
 roleRef:
   kind: Role
   name: pod-reader

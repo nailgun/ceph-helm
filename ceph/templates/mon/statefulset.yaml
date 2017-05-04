@@ -36,7 +36,7 @@ spec:
           }
         version: {{ .Chart.Version }}
     spec:
-      serviceAccount: ceph-mon
+      serviceAccount: pod-reader
       containers:
         - name: main
           image: {{ .Values.images.daemon }}
