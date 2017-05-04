@@ -1,0 +1,8 @@
+1. Generate ceph secrets:
+$ ./generate_ceph_secrets.py | kubectl -n {{ .Release.Namespace }} create -f -
+
+2. Label the nodes that will take part in the Ceph cluster:
+$ kubectl label node NODE_NAME --overwrite ceph-storage=enabled
+
+3. Activate namespaces which will use "{{ .Values.storageclass.name }}" storage class:
+$ ./activate-namespace.sh NAMESPACE_NAME
