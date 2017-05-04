@@ -1,6 +1,6 @@
 ---
-apiVersion: apps/v1beta1
-kind: StatefulSet
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   labels:
     app: ceph
@@ -9,7 +9,6 @@ metadata:
     version: {{ .Chart.Version }}
   name: ceph-mon
 spec:
-  serviceName: {{ .Values.service.mon.name | quote }}
   replicas: {{ .Values.resources.mon.replicas }}
   template:
     metadata:
@@ -18,22 +17,6 @@ spec:
         app: ceph
         daemon: mon
         release: {{ .Release.Name }}
-      annotations:
-        scheduler.alpha.kubernetes.io/affinity: >
-          {
-            "podAntiAffinity": {
-              "RequiredDuringSchedulingIgnoredDuringExecution": [{
-                "labelSelector": {
-                  "matchExpressions": [{
-                    "key": "daemon",
-                    "operator": "In",
-                    "values":["mon"]
-                  }]
-                },
-              "topologyKey": "kubernetes.io/hostname"
-              }]
-            }
-          }
         version: {{ .Chart.Version }}
     spec:
       serviceAccount: pod-reader
