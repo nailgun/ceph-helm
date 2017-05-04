@@ -111,7 +111,7 @@ resources:
     limits:
       memory: "100Mi"
       cpu: "2000m"
-  mon_check:
+  mon_health:
     requests:
       memory: "5Mi"
       cpu: "250m"

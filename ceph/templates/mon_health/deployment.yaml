@@ -4,18 +4,18 @@ apiVersion: extensions/v1beta1
 metadata:
   labels:
     app: ceph
-    daemon: moncheck
+    daemon: mon-health
     release: {{ .Release.Name }}
     version: {{ .Chart.Version }}
-  name: ceph-mon-check
+  name: ceph-mon-health
 spec:
   replicas: 1
   template:
     metadata:
-      name: ceph-mon
+      name: ceph-mon-health
       labels:
         app: ceph
-        daemon: moncheck
+        daemon: mon-health
         release: {{ .Release.Name }}
         version: {{ .Chart.Version }}
     spec:
@@ -28,7 +28,7 @@ spec:
             - containerPort: {{ .Values.service.mon.port }}
           env:
             - name: CEPH_DAEMON
-              value: MON_HEALTH
+              value: mon_health
             - name: KV_TYPE
               value: k8s
             - name: MON_IP_AUTO_DETECT
@@ -61,11 +61,11 @@ spec:
           {{ if .Values.resources.enable_limits }}
           resources:
             requests:
-              memory: {{ .Values.resources.mon_check.requests.memory | quote }}
-              cpu: {{ .Values.resources.mon_check.requests.cpu | quote }}
+              memory: {{ .Values.resources.mon_health.requests.memory | quote }}
+              cpu: {{ .Values.resources.mon_health.requests.cpu | quote }}
             limits:
-              memory: {{ .Values.resources.mon_check.limits.memory | quote }}
-              cpu: {{ .Values.resources.mon_check.limits.cpu | quote }}
+              memory: {{ .Values.resources.mon_health.limits.memory | quote }}
+              cpu: {{ .Values.resources.mon_health.limits.cpu | quote }}
           {{ end }}
       volumes:
         - name: ceph-conf
