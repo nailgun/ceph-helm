@@ -13,6 +13,7 @@ service:
   mon:
     name: ceph-mon
     port: 6789
+    enable_probes: false
 
 network:
   cluster: 10.2.0.0/16
