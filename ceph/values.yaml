@@ -1,5 +1,5 @@
 images:
-  daemon: docker.io/ceph/daemon:latest
+  daemon: docker.io/ceph/daemon:tag-build-master-jewel-ubuntu-14.04
 
 image_policy:
   pull: Always
@@ -14,8 +14,8 @@ service:
     port: 6789
 
 network:
-  cluster: 10.192.0.0/10
-  public: 10.192.0.0/10
+  cluster: 10.2.0.0/16
+  public: 10.2.0.0/16
 
 secrets:
   keyrings:
@@ -40,11 +40,10 @@ ceph:
       max_open_files: 131072
       osd_pool_default_pg_num: 128
       osd_pool_default_pgp_num: 128
-      osd_pool_default_size: 3
+      osd_pool_default_size: 2
       osd_pool_default_min_size: 1
       mon_osd_full_ratio: .95
       mon_osd_nearfull_ratio: .85
-      mon_host: ceph-mon
     mon:
       mon_osd_down_out_interval: 600
       mon_osd_min_down_reporters: 4
@@ -103,7 +102,7 @@ resources:
       memory: "50Mi"
       cpu: "500m"
   mon:
-    replicas: 3
+    replicas: 1
     requests:
       memory: "50Mi"
       cpu: "1000m"
