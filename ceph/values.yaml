@@ -31,8 +31,8 @@ secrets:
 
 ceph:
   storage:
-    osd_directory: /var/lib/ceph-helm/ceph/osd
-    var_directory: /var/lib/ceph-helm/ceph/ceph
+    var_directory: /ceph
+    osd_directory: /ceph/osd
   config:
     global:
       cephx: true
