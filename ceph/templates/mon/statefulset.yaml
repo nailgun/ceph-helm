@@ -50,11 +50,15 @@ spec:
             - containerPort: {{ .Values.service.mon.port }}
           env:
             - name: CEPH_DAEMON
-              value: MON
+              value: mon
             - name: KV_TYPE
               value: k8s
-            - name: NETWORK_AUTO_DETECT
-              value: "1"
+            - name: MON_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: CEPH_PUBLIC_NETWORK
+              value: {{ .Values.network.public }}
             - name: CLUSTER
               value: {{ .Release.Namespace }}
           volumeMounts:
