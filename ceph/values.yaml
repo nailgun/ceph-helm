@@ -87,6 +87,7 @@ ceph:
       mds_cache_size: 100000
 
 resources:
+  enable_limits: false
   osd:
     requests:
       memory: "512Mi"

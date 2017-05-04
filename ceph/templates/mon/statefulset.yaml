@@ -95,6 +95,7 @@ spec:
                 port: {{ .Values.service.mon.port }}
               timeoutSeconds: 5
           {{ end }}
+          {{ if .Values.resources.enable_limits }}
           resources:
             requests:
               memory: {{ .Values.resources.mon.requests.memory | quote }}
@@ -102,6 +103,7 @@ spec:
             limits:
               memory: {{ .Values.resources.mon.limits.memory | quote }}
               cpu: {{ .Values.resources.mon.limits.cpu | quote }}
+          {{ end }}
       volumes:
         - name: ceph-conf
           configMap:

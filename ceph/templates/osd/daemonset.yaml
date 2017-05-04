@@ -72,6 +72,7 @@ spec:
               tcpSocket:
                 port: 6800
               timeoutSeconds: 5
+          {{ if .Values.resources.enable_limits }}
           resources:
             requests:
               memory: {{ .Values.resources.osd.requests.memory | quote }}
@@ -79,6 +80,7 @@ spec:
             limits:
               memory: {{ .Values.resources.osd.limits.memory | quote }}
               cpu: {{ .Values.resources.osd.limits.cpu | quote }}
+          {{ end }}
       volumes:
         - name: devices
           hostPath:
