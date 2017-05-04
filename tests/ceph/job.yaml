@@ -1,16 +1,14 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: batch/v1
 kind: Job
 metadata:
   labels:
-    version: {{ .Chart.Version }}
     test: ceph
   name: ceph-test-job
 spec:
   template:
     metadata:
       labels:
-        version: {{ .Chart.Version }}
         test: ceph
       name: ceph-test-job
     spec:
