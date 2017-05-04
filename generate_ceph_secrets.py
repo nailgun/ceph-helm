@@ -33,7 +33,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: {name}
-type: Opaque
+type: {type}
 data:
   {key}: {value_b64}
 '''
@@ -51,10 +51,11 @@ def main():
         name = 'ceph-{}-keyring'.format(name)
         value = tpl.format(key)
         value_b64 = base64.b64encode(value.encode('ascii')).decode('ascii')
-        manifest = manifest_template.format(name=name, key='keyring', value_b64=value_b64)
+        manifest = manifest_template.format(name=name, type='Opaque', key='keyring', value_b64=value_b64)
         print(manifest)
 
     print(manifest_template.format(name='pvc-ceph-conf-combined-storageclass',
+                                   type='kubernetes.io/rbd',
                                    key='key',
                                    value_b64=base64.b64encode(client_key).decode('ascii')))
 
