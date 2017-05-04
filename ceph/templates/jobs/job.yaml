@@ -2,18 +2,18 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   labels:
-    version: v0.1.0
     app: ceph
     release: {{ .Release.Name }}
+    version: {{ .Chart.Version }}
     daemon: secret-generator
   name: ceph-secret-generator
 spec:
   template:
     metadata:
       labels:
-        version: v0.1.0
         app: ceph
         release: {{ .Release.Name }}
+        version: {{ .Chart.Version }}
         daemon: secret-generator
       name: ceph-secret-generator
     spec:

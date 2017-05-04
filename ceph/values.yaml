@@ -26,7 +26,6 @@ secrets:
     admin: ceph-client-admin-keyring
 
 ceph:
-  cluster: ceph
   storage:
     osd_directory: /var/lib/ceph-helm/ceph/osd
     var_directory: /var/lib/ceph-helm/ceph/ceph

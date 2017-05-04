@@ -3,14 +3,14 @@ apiVersion: extensions/v1beta1
 kind: Job
 metadata:
   labels:
-    version: v0.1.0
+    version: {{ .Chart.Version }}
     test: ceph
   name: ceph-test-job
 spec:
   template:
     metadata:
       labels:
-        version: v0.1.0
+        version: {{ .Chart.Version }}
         test: ceph
       name: ceph-test-job
     spec:

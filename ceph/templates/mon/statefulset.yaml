@@ -3,10 +3,10 @@ apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   labels:
-    version: v0.1.0
     app: ceph
     daemon: mon
     release: {{ .Release.Name }}
+    version: {{ .Chart.Version }}
   name: ceph-mon
 spec:
   serviceName: {{ .Values.service.mon.name | quote }}
@@ -15,7 +15,6 @@ spec:
     metadata:
       name: ceph-mon
       labels:
-        version: v0.1.0
         app: ceph
         daemon: mon
         release: {{ .Release.Name }}
@@ -35,6 +34,7 @@ spec:
               }]
             }
           }
+        version: {{ .Chart.Version }}
     spec:
       serviceAccount: default
       containers:
@@ -56,7 +56,7 @@ spec:
             - name: NETWORK_AUTO_DETECT
               value: "1"
             - name: CLUSTER
-              value: {{ .Values.ceph.cluster }}
+              value: {{ .Release.Namespace }}
           volumeMounts:
             - name: ceph-conf
               mountPath: /etc/ceph/ceph.conf

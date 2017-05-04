@@ -3,10 +3,10 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   labels:
-    version: v0.1.0
     app: ceph
     daemon: moncheck
     release: {{ .Release.Name }}
+    version: {{ .Chart.Version }}
   name: ceph-mon-check
 spec:
   replicas: 1
@@ -14,10 +14,10 @@ spec:
     metadata:
       name: ceph-mon
       labels:
-        version: v0.1.0
         app: ceph
         daemon: moncheck
         release: {{ .Release.Name }}
+        version: {{ .Chart.Version }}
     spec:
       serviceAccount: default
       containers:
@@ -34,7 +34,7 @@ spec:
             - name: MON_IP_AUTO_DETECT
               value: "1"
             - name: CLUSTER
-              value: {{ .Values.ceph.cluster }}
+              value: {{ .Release.Namespace }}
           volumeMounts:
             - name: ceph-conf
               mountPath: /etc/ceph/ceph.conf
