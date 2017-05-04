@@ -16,6 +16,8 @@ service:
     enable_probes: false
   mon_health:
     enable: false
+  mds:
+    enable: false
 
 network:
   cluster: 10.2.0.0/16
