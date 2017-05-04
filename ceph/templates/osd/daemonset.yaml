@@ -59,6 +59,10 @@ spec:
               value: {{ .Release.Namespace }}
             - name: CEPH_GET_ADMIN_KEY
               value: "1"
+            {{ if .Values.images.debug }}
+            - name: DEBUG
+              value: verbose
+            {{ end }}
           livenessProbe:
               tcpSocket:
                 port: 6800

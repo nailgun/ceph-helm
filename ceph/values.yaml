@@ -1,5 +1,6 @@
 images:
   daemon: docker.io/ceph/daemon:tag-build-master-jewel-ubuntu-14.04
+  debug: true
 
 image_policy:
   pull: Always

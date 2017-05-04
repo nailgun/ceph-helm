@@ -61,6 +61,10 @@ spec:
               value: {{ .Values.network.public }}
             - name: CLUSTER
               value: {{ .Release.Namespace }}
+            {{ if .Values.images.debug }}
+            - name: DEBUG
+              value: verbose
+            {{ end }}
           volumeMounts:
             - name: ceph-conf
               mountPath: /etc/ceph/ceph.conf
