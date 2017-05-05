@@ -127,6 +127,6 @@ storageclass:
   name: general
   pool: rbd
   admin_id: admin
-  admin_secret_name: pvc-ceph-conf-combined-storageclass
+  admin_secret_name: rbd-admin
   user_id: admin
-  user_secret_name: pvc-ceph-client-key
+  user_secret_name: rbd-user

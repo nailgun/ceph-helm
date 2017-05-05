@@ -9,10 +9,10 @@ kube_namespace=$1
 apiVersion: v1
 kind: Secret
 metadata:
-  name: "pvc-ceph-client-key"
+  name: rbd-user
 type: kubernetes.io/rbd
 data:
   key: |
-    $(kubectl get secret pvc-ceph-conf-combined-storageclass --namespace=ceph -o json | jq -r '.data | .[]')
+    $(kubectl get secret rbd-admin --namespace=ceph -o json | jq -r '.data | .[]')
 EOF
 } | kubectl create --namespace ${kube_namespace} -f -

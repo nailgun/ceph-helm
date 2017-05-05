@@ -54,7 +54,7 @@ def main():
         manifest = manifest_template.format(name=name, type='Opaque', key='keyring', value_b64=value_b64)
         print(manifest)
 
-    print(manifest_template.format(name='pvc-ceph-conf-combined-storageclass',
+    print(manifest_template.format(name='rbd-admin',
                                    type='kubernetes.io/rbd',
                                    key='key',
                                    value_b64=base64.b64encode(client_key).decode('ascii')))
