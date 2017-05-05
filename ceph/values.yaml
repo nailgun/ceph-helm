@@ -126,6 +126,7 @@ resources:
 storageclass:
   name: general
   pool: rbd
+  make_default: true
   admin_id: admin
   admin_secret_name: rbd-admin
   user_id: admin

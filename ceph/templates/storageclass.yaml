@@ -3,6 +3,10 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
     name: {{ .Values.storageclass.name }}
+    {{ if .Values.storageclass.make_default }}
+    annotations:
+        storageclass.kubernetes.io/is-default-class: 'true'
+    {{ end }}
 provisioner: kubernetes.io/rbd
 parameters:
     monitors: {{ .Values.service.mon.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.mon.port }}
