@@ -31,22 +31,22 @@ spec:
             - name: osd-directory
               mountPath: /var/lib/ceph/osd
             - name: ceph-conf
-              mountPath: /etc/ceph/ceph.conf
+              mountPath: /etc/ceph/{{ .Release.Namespace }}.conf
               subPath: ceph.conf
             - name: ceph-client-admin-keyring
-              mountPath: /etc/ceph/ceph.client.admin.keyring
+              mountPath: /etc/ceph/{{ .Release.Namespace }}.client.admin.keyring
               subPath: keyring
             - name: ceph-mon-keyring
-              mountPath: /etc/ceph/ceph.mon.keyring
+              mountPath: /etc/ceph/{{ .Release.Namespace }}.mon.keyring
               subPath: keyring
             - name: ceph-bootstrap-osd-keyring
-              mountPath: /var/lib/ceph/bootstrap-osd/ceph.keyring
+              mountPath: /var/lib/ceph/bootstrap-osd/{{ .Release.Namespace }}.keyring
               subPath: keyring
             - name: ceph-bootstrap-mds-keyring
-              mountPath: /var/lib/ceph/bootstrap-mds/ceph.keyring
+              mountPath: /var/lib/ceph/bootstrap-mds/{{ .Release.Namespace }}.keyring
               subPath: keyring
             - name: ceph-bootstrap-rgw-keyring
-              mountPath: /var/lib/ceph/bootstrap-rgw/ceph.keyring
+              mountPath: /var/lib/ceph/bootstrap-rgw/{{ .Release.Namespace }}.keyring
               subPath: keyring
           securityContext:
             privileged: true
@@ -87,10 +87,10 @@ spec:
             path: /dev
         - name: ceph
           hostPath:
-            path: {{ .Values.ceph.storage.var_directory }}
+            path: {{ .Values.ceph.storage.base_dir }}/{{ .Release.Namespace }}
         - name: osd-directory
           hostPath:
-            path: {{ .Values.ceph.storage.osd_directory }}
+            path: {{ .Values.ceph.storage.base_dir }}/{{ .Release.Namespace }}/osd
         - name: ceph-conf
           configMap:
             name: ceph-conf

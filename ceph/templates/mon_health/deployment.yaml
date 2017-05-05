@@ -40,22 +40,22 @@ spec:
             {{ end }}
           volumeMounts:
             - name: ceph-conf
-              mountPath: /etc/ceph/ceph.conf
+              mountPath: /etc/ceph/{{ .Release.Namespace }}.conf
               subPath: ceph.conf
             - name: ceph-client-admin-keyring
-              mountPath: /etc/ceph/ceph.client.admin.keyring
+              mountPath: /etc/ceph/{{ .Release.Namespace }}.client.admin.keyring
               subPath: keyring
             - name: ceph-mon-keyring
-              mountPath: /etc/ceph/ceph.mon.keyring
+              mountPath: /etc/ceph/{{ .Release.Namespace }}.mon.keyring
               subPath: keyring
             - name: ceph-bootstrap-osd-keyring
-              mountPath: /var/lib/ceph/bootstrap-osd/ceph.keyring
+              mountPath: /var/lib/ceph/bootstrap-osd/{{ .Release.Namespace }}.keyring
               subPath: keyring
             - name: ceph-bootstrap-mds-keyring
-              mountPath: /var/lib/ceph/bootstrap-mds/ceph.keyring
+              mountPath: /var/lib/ceph/bootstrap-mds/{{ .Release.Namespace }}.keyring
               subPath: keyring
             - name: ceph-bootstrap-rgw-keyring
-              mountPath: /var/lib/ceph/bootstrap-rgw/ceph.keyring
+              mountPath: /var/lib/ceph/bootstrap-rgw/{{ .Release.Namespace }}.keyring
               subPath: keyring
           {{ if .Values.resources.enable_limits }}
           resources:

@@ -33,8 +33,7 @@ secrets:
 
 ceph:
   storage:
-    var_directory: /ceph
-    osd_directory: /ceph/osd
+    base_dir: /storage
   config:
     global:
       cephx: true
