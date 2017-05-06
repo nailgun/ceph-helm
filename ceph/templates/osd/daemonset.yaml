@@ -75,11 +75,11 @@ spec:
           {{ if .Values.resources.enable_limits }}
           resources:
             requests:
-              memory: {{ .Values.resources.osd.requests.memory | quote }}
-              cpu: {{ .Values.resources.osd.requests.cpu | quote }}
+              memory: {{ .Values.resources.osd.requests.memory }}
+              cpu: {{ .Values.resources.osd.requests.cpu }}
             limits:
-              memory: {{ .Values.resources.osd.limits.memory | quote }}
-              cpu: {{ .Values.resources.osd.limits.cpu | quote }}
+              memory: {{ .Values.resources.osd.limits.memory }}
+              cpu: {{ .Values.resources.osd.limits.cpu }}
           {{ end }}
       volumes:
         - name: devices

@@ -60,11 +60,11 @@ spec:
           {{ if .Values.resources.enable_limits }}
           resources:
             requests:
-              memory: {{ .Values.resources.mon_health.requests.memory | quote }}
-              cpu: {{ .Values.resources.mon_health.requests.cpu | quote }}
+              memory: {{ .Values.resources.mon_health.requests.memory }}
+              cpu: {{ .Values.resources.mon_health.requests.cpu }}
             limits:
-              memory: {{ .Values.resources.mon_health.limits.memory | quote }}
-              cpu: {{ .Values.resources.mon_health.limits.cpu | quote }}
+              memory: {{ .Values.resources.mon_health.limits.memory }}
+              cpu: {{ .Values.resources.mon_health.limits.cpu }}
           {{ end }}
       volumes:
         - name: ceph-conf
