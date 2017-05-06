@@ -5,10 +5,6 @@ images:
 image_policy:
   pull: Always
 
-labels:
-  node_selector_key: ceph-storage
-  node_selector_value: enabled
-
 service:
   mon:
     name: ceph-mon

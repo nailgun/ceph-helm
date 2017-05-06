@@ -60,6 +60,7 @@ def main():
                                    value_b64=base64.b64encode(client_key).decode('ascii')))
 
 
+# based on https://github.com/ceph/ceph-docker/blob/master/examples/kubernetes/generator/ceph-key.py
 def gen_key(keysize_bytes=16):
     key = os.urandom(keysize_bytes)
 
