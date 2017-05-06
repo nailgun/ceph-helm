@@ -30,9 +30,9 @@ spec:
             - containerPort: 6800
           env:
             - name: CEPH_DAEMON
-              value: MDS
+              value: mds
             - name: CEPHFS_CREATE
-              value: "1"
+              value: '1'
             - name: KV_TYPE
               value: k8s
             - name: CLUSTER
