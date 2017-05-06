@@ -1,9 +1,7 @@
-images:
-  daemon: docker.io/ceph/daemon:tag-build-master-jewel-ubuntu-14.04
+image:
+  src: docker.io/ceph/daemon:tag-build-master-jewel-ubuntu-14.04
+  pull_policy: Always
   debug: true
-
-image_policy:
-  pull: Always
 
 service:
   mon:

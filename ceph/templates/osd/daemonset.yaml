@@ -21,8 +21,8 @@ spec:
         ceph-storage: enabled
       containers:
         - name: main
-          image: {{ .Values.images.daemon }}
-          imagePullPolicy: {{ .Values.image_policy.pull }}
+          image: {{ .Values.image.src }}
+          imagePullPolicy: {{ .Values.image.pull_policy }}
           volumeMounts:
             - name: devices
               mountPath: /dev
@@ -59,7 +59,7 @@ spec:
               value: {{ .Release.Namespace }}
             - name: CEPH_GET_ADMIN_KEY
               value: "1"
-            {{ if .Values.images.debug }}
+            {{ if .Values.image.debug }}
             - name: DEBUG
               value: verbose
             {{ end }}
