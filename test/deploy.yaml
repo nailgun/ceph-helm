@@ -1,0 +1,27 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: ceph-test
+  name: ceph-test
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: ceph-test
+    spec:
+      containers:
+      - args:
+        - sleep
+        - "100000"
+        image: busybox
+        name: ceph-test
+        volumeMounts:
+          - name: ceph-mount
+            mountPath: /mnt/ceph
+      volumes:
+        - name: ceph-mount
+          persistentVolumeClaim:
+            claimName: ceph-test

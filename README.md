@@ -78,3 +78,7 @@ options ndots:5
 options timeout:1
 options attempts:1
 ```
+
+
+$ kubectl -n ceph exec $(kubectl -n ceph get pods -l daemon=mon --template='{{ (index .items 0).metadata.name }}') -- ceph -s
+$ kubectl exec -it $(kubectl get pods -l run=ceph-test --template='{{ (index .items 0).metadata.name }}') -- sh
