@@ -41,7 +41,7 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: CEPH_PUBLIC_NETWORK
-              value: {{ .Values.network.public }}
+              value: {{ .Values.pod_network }}
             - name: CLUSTER
               value: {{ .Release.Namespace }}
             {{ if .Values.images.debug }}

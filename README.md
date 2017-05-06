@@ -81,4 +81,7 @@ options attempts:1
 
 
 $ kubectl -n ceph exec $(kubectl -n ceph get pods -l daemon=mon --template='{{ (index .items 0).metadata.name }}') -- ceph -s
+$ kubectl -n ceph exec $(kubectl -n ceph get pods -l daemon=mon --template='{{ (index .items 0).metadata.name }}') -- sh -c 'ceph --admin-daemon /var/run/ceph/* config show'
 $ kubectl exec -it $(kubectl get pods -l run=ceph-test --template='{{ (index .items 0).metadata.name }}') -- sh
+
+Last synced with [this upstream ceph.conf](https://github.com/ceph/ceph-docker/blob/ebf36ff/examples/kubernetes/generator/templates/ceph/ceph.conf.tmpl)
