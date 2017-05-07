@@ -8,10 +8,6 @@ service:
     name: ceph-mon
     port: 6789
     enable_probes: false
-  mon_health:
-    enable: false
-  mds:
-    enable: false
 
 pod_network: 10.2.0.0/16
 
@@ -87,7 +83,7 @@ resources:
       memory: 1024Mi
       cpu: 2000m
   mds:
-    replicas: 1
+    replicas: 0
     requests:
       memory: 10Mi
       cpu: 250m
@@ -103,6 +99,7 @@ resources:
       memory: 100Mi
       cpu: 2000m
   mon_health:
+    replicas: 0
     requests:
       memory: 5Mi
       cpu: 250m

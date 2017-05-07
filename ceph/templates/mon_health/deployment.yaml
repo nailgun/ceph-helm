@@ -1,4 +1,3 @@
-{{ if .Values.service.mon_health.enable }}
 ---
 kind: Deployment
 apiVersion: extensions/v1beta1
@@ -10,7 +9,7 @@ metadata:
     version: {{ .Chart.Version }}
   name: ceph-mon-health
 spec:
-  replicas: 1
+  replicas: {{ .Values.resources.mon_health.replicas }}
   template:
     metadata:
       name: ceph-mon-health
@@ -87,4 +86,3 @@ spec:
         - name: ceph-bootstrap-rgw-keyring
           secret:
             secretName: {{ .Values.secrets.keyrings.rgw }}
-{{ end }}
