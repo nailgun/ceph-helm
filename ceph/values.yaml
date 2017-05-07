@@ -95,7 +95,7 @@ resources:
       memory: 50Mi
       cpu: 500m
   mon:
-    replicas: 1
+    replicas: 3
     requests:
       memory: 50Mi
       cpu: 1000m

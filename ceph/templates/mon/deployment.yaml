@@ -20,6 +20,18 @@ spec:
         version: {{ .Chart.Version }}
     spec:
       serviceAccount: pod-reader
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values: [ceph]
+              - key: daemon
+                operator: In
+                values: [mon]
+            topologyKey: kubernetes.io/hostname
       containers:
         - name: main
           image: {{ .Values.image.src }}
