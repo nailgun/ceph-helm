@@ -117,7 +117,7 @@ storageclass:
   # do not change the following
   admin_id: admin
   admin_secret_name: rbd-admin
-  user_id: admin
+  user_id: user
   user_secret_name: rbd-user
 
 # do not change

@@ -13,6 +13,6 @@ metadata:
 type: kubernetes.io/rbd
 data:
   key: |
-    $(kubectl get secret rbd-admin --namespace=ceph -o json | jq -r '.data | .[]')
+    $(kubectl get secret rbd-user --namespace=ceph -o json | jq -r '.data | .[]')
 EOF
 } | kubectl create --namespace ${kube_namespace} -f -

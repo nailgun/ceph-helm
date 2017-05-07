@@ -6,13 +6,7 @@ import base64
 import struct
 
 
-templates = {
-    'client-admin':  '[client.admin]\n'
-                     '  key = {}\n'
-                     '  auid = 0\n'
-                     '  caps mds = "allow"\n'
-                     '  caps mon = "allow *"\n'
-                     '  caps osd = "allow *"\n',
+daemon_keyring_templates = {
     'mon':           '[mon.]\n'
                      '  key = {}\n'
                      '  caps mon = "allow *"\n',
@@ -27,8 +21,22 @@ templates = {
                      '  caps mon = "allow profile bootstrap-rgw"\n',
 }
 
+client_keyring_template = '''
+[client.admin]
+  key = {admin_key}
+  auid = 0
+  caps mds = "allow"
+  caps mon = "allow *"
+  caps osd = "allow *"
 
-manifest_template = '''---
+[client.user]
+  key = {user_key}
+  auid = 1
+  caps mon = "allow *"
+  caps osd = "allow *"
+'''
+
+secret_manifest_template = '''---
 apiVersion: v1
 kind: Secret
 metadata:
@@ -40,24 +48,41 @@ data:
 
 
 def main():
-    client_key = gen_key()  # TODO: use different client key for storage (without admin access)
+    for name, tpl in daemon_keyring_templates.items():
+        key = gen_key()
 
-    for name, tpl in templates.items():
-        if name == 'client-admin':
-            key = client_key
-        else:
-            key = gen_key()
-
-        name = 'ceph-{}-keyring'.format(name)
+        secret_name = 'ceph-{}-keyring'.format(name)
         value = tpl.format(key)
         value_b64 = base64.b64encode(value.encode('ascii')).decode('ascii')
-        manifest = manifest_template.format(name=name, type='Opaque', key='keyring', value_b64=value_b64)
+        manifest = secret_manifest_template.format(name=secret_name,
+                                                   type='Opaque',
+                                                   key='keyring',
+                                                   value_b64=value_b64)
         print(manifest)
 
-    print(manifest_template.format(name='rbd-admin',
-                                   type='kubernetes.io/rbd',
-                                   key='key',
-                                   value_b64=base64.b64encode(client_key).decode('ascii')))
+    client_keys = {
+        'admin': gen_key(),
+        'user': gen_key(),
+    }
+
+    secret_name = 'ceph-client-admin-keyring'
+    value = client_keyring_template.format(admin_key=client_keys['admin'],
+                                           user_key=client_keys['user'])
+    value_b64 = base64.b64encode(value.encode('ascii')).decode('ascii')
+    manifest = secret_manifest_template.format(name=secret_name,
+                                               type='Opaque',
+                                               key='keyring',
+                                               value_b64=value_b64)
+    print(manifest)
+
+    for client_name, key in client_keys.items():
+        secret_name = 'rbd-' + client_name
+        value_b64 = base64.b64encode(key.encode('ascii')).decode('ascii')
+        manifest = secret_manifest_template.format(name=secret_name,
+                                                   type='kubernetes.io/rbd',
+                                                   key='key',
+                                                   value_b64=value_b64)
+        print(manifest)
 
 
 # based on https://github.com/ceph/ceph-docker/blob/master/examples/kubernetes/generator/ceph-key.py
