@@ -58,7 +58,7 @@ spec:
             - name: CLUSTER
               value: {{ .Release.Namespace }}
             - name: CEPH_GET_ADMIN_KEY
-              value: "1"
+              value: '1'
             {{ if .Values.image.debug }}
             - name: DEBUG
               value: verbose
