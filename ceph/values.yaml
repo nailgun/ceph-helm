@@ -8,6 +8,9 @@ service:
     name: ceph-mon
     port: 6789
     enable_probes: false
+  rgw:
+    name: ceph-rgw
+    port: 80
 
 pod_network: 10.2.0.0/16
 
@@ -105,6 +108,14 @@ resources:
       cpu: 250m
     limits:
       memory: 50Mi
+      cpu: 500m
+  rgw:
+    replicas: 0
+    requests:
+      memory: 500Mi
+      cpu: 500m
+    limits:
+      memory: 500Mi
       cpu: 500m
 
 storageclass:

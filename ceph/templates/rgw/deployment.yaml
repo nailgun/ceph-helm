@@ -1,0 +1,96 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  labels:
+    app: ceph
+    daemon: rgw
+    release: {{ .Release.Name }}
+    version: {{ .Chart.Version }}
+  name: ceph-rgw
+spec:
+  replicas: {{ .Values.resources.rgw.replicas }}
+  template:
+    metadata:
+      name: ceph-rgw
+      labels:
+        app: ceph
+        daemon: rgw
+        release: {{ .Release.Name }}
+        version: {{ .Chart.Version }}
+    spec:
+      containers:
+        - name: main
+          image: {{ .Values.image.src }}
+          imagePullPolicy: {{ .Values.image.pull_policy }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CEPH_DAEMON
+              value: rgw
+            - name: KV_TYPE
+              value: k8s
+            - name: CLUSTER
+              value: {{ .Release.Namespace }}
+            {{ if .Values.image.debug }}
+            - name: DEBUG
+              value: verbose
+            {{ end }}
+          volumeMounts:
+            - name: ceph-conf
+              mountPath: /etc/ceph/{{ .Release.Namespace }}.conf
+              subPath: ceph.conf
+            - name: ceph-client-admin-keyring
+              mountPath: /etc/ceph/{{ .Release.Namespace }}.client.admin.keyring
+              subPath: keyring
+            - name: ceph-mon-keyring
+              mountPath: /etc/ceph/{{ .Release.Namespace }}.mon.keyring
+              subPath: keyring
+            - name: ceph-bootstrap-osd-keyring
+              mountPath: /var/lib/ceph/bootstrap-osd/{{ .Release.Namespace }}.keyring
+              subPath: keyring
+            - name: ceph-bootstrap-mds-keyring
+              mountPath: /var/lib/ceph/bootstrap-mds/{{ .Release.Namespace }}.keyring
+              subPath: keyring
+            - name: ceph-bootstrap-rgw-keyring
+              mountPath: /var/lib/ceph/bootstrap-rgw/{{ .Release.Namespace }}.keyring
+              subPath: keyring
+          livenessProbe:
+              httpGet:
+                path: /
+                port: 8080
+              initialDelaySeconds: 120
+              timeoutSeconds: 5
+          readinessProbe:
+              httpGet:
+                path: /
+                port: 8080
+              timeoutSeconds: 5
+          {{ if .Values.resources.enable_limits }}
+          resources:
+            requests:
+              memory: {{ .Values.resources.rgw.requests.memory }}
+              cpu: {{ .Values.resources.rgw.requests.cpu }}
+            limits:
+              memory: {{ .Values.resources.rgw.limits.memory }}
+              cpu: {{ .Values.resources.rgw.limits.cpu }}
+          {{ end }}
+      volumes:
+        - name: ceph-conf
+          configMap:
+            name: ceph-conf
+        - name: ceph-client-admin-keyring
+          secret:
+            secretName: {{ .Values.secrets.keyrings.admin }}
+        - name: ceph-mon-keyring
+          secret:
+            secretName: {{ .Values.secrets.keyrings.mon }}
+        - name: ceph-bootstrap-osd-keyring
+          secret:
+            secretName: {{ .Values.secrets.keyrings.osd }}
+        - name: ceph-bootstrap-mds-keyring
+          secret:
+            secretName: {{ .Values.secrets.keyrings.mds }}
+        - name: ceph-bootstrap-rgw-keyring
+          secret:
+            secretName: {{ .Values.secrets.keyrings.rgw }}
