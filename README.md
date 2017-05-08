@@ -1,4 +1,4 @@
-# Ceph Helm
+# Ceph helm chart
 
 ## Cluster requirements
 
