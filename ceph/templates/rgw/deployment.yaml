@@ -43,15 +43,6 @@ spec:
             - name: ceph-client-admin-keyring
               mountPath: /etc/ceph/{{ .Release.Namespace }}.client.admin.keyring
               subPath: keyring
-            - name: ceph-mon-keyring
-              mountPath: /etc/ceph/{{ .Release.Namespace }}.mon.keyring
-              subPath: keyring
-            - name: ceph-bootstrap-osd-keyring
-              mountPath: /var/lib/ceph/bootstrap-osd/{{ .Release.Namespace }}.keyring
-              subPath: keyring
-            - name: ceph-bootstrap-mds-keyring
-              mountPath: /var/lib/ceph/bootstrap-mds/{{ .Release.Namespace }}.keyring
-              subPath: keyring
             - name: ceph-bootstrap-rgw-keyring
               mountPath: /var/lib/ceph/bootstrap-rgw/{{ .Release.Namespace }}.keyring
               subPath: keyring
@@ -82,15 +73,6 @@ spec:
         - name: ceph-client-admin-keyring
           secret:
             secretName: {{ .Values.secrets.keyrings.admin }}
-        - name: ceph-mon-keyring
-          secret:
-            secretName: {{ .Values.secrets.keyrings.mon }}
-        - name: ceph-bootstrap-osd-keyring
-          secret:
-            secretName: {{ .Values.secrets.keyrings.osd }}
-        - name: ceph-bootstrap-mds-keyring
-          secret:
-            secretName: {{ .Values.secrets.keyrings.mds }}
         - name: ceph-bootstrap-rgw-keyring
           secret:
             secretName: {{ .Values.secrets.keyrings.rgw }}
