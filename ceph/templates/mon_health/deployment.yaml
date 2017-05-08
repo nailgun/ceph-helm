@@ -24,8 +24,6 @@ spec:
         - name: main
           image: {{ .Values.image.src }}
           imagePullPolicy: {{ .Values.image.pull_policy }}
-          ports:
-            - containerPort: {{ .Values.service.mon.port }}
           env:
             - name: CEPH_DAEMON
               value: mon_health

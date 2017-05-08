@@ -11,7 +11,7 @@ spec:
   ports:
   - port: {{ .Values.service.mon.port }}
     protocol: TCP
-    targetPort: {{ .Values.service.mon.port }}
+    targetPort: 6789
   selector:
     app: ceph
     daemon: mon

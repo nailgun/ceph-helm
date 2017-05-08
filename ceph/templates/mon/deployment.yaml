@@ -41,7 +41,7 @@ spec:
                 exec:
                   command: ['/bin/sh', '-c', 'ceph mon remove $HOSTNAME']
           ports:
-            - containerPort: {{ .Values.service.mon.port }}
+            - containerPort: 6789
           env:
             - name: CEPH_DAEMON
               value: mon
@@ -85,12 +85,12 @@ spec:
           {{ if .Values.service.mon.enable_probes }}
           livenessProbe:
               tcpSocket:
-                port: {{ .Values.service.mon.port }}
+                port: 6789
               initialDelaySeconds: 60
               timeoutSeconds: 5
           readinessProbe:
               tcpSocket:
-                port: {{ .Values.service.mon.port }}
+                port: 6789
               timeoutSeconds: 5
           {{ end }}
           {{ if .Values.resources.enable_limits }}
