@@ -26,9 +26,7 @@ spec:
           volumeMounts:
             - name: devices
               mountPath: /dev
-            - name: ceph
-              mountPath: /var/lib/ceph
-            - name: osd-directory
+            - name: ceph-osd
               mountPath: /var/lib/ceph/osd
             - name: ceph-conf
               mountPath: /etc/ceph/{{ .Release.Namespace }}.conf
@@ -85,10 +83,7 @@ spec:
         - name: devices
           hostPath:
             path: /dev
-        - name: ceph
-          hostPath:
-            path: {{ .Values.ceph.storage.base_dir }}/{{ .Release.Namespace }}
-        - name: osd-directory
+        - name: ceph-osd
           hostPath:
             path: {{ .Values.ceph.storage.base_dir }}/{{ .Release.Namespace }}/osd
         - name: ceph-conf
