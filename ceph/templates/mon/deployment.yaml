@@ -82,17 +82,6 @@ spec:
             - name: ceph-bootstrap-rgw-keyring
               mountPath: /var/lib/ceph/bootstrap-rgw/{{ .Release.Namespace }}.keyring
               subPath: keyring
-          {{ if .Values.service.mon.enable_probes }}
-          livenessProbe:
-              tcpSocket:
-                port: 6789
-              initialDelaySeconds: 60
-              timeoutSeconds: 5
-          readinessProbe:
-              tcpSocket:
-                port: 6789
-              timeoutSeconds: 5
-          {{ end }}
           {{ if .Values.resources.enable_limits }}
           resources:
             requests:

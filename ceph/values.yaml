@@ -7,7 +7,6 @@ service:
   mon:
     name: ceph-mon
     port: 6789
-    enable_probes: false
   rgw:
     name: ceph-rgw
     port: 80
