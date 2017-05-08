@@ -7,29 +7,10 @@ data:
     [global]
     fsid = {{ .Values.ceph.config.fsid | default uuidv4 }}
     mon_host = {{ .Values.service.mon.name }}
-    cluster_network = {{ .Values.pod_network }}
-    public_network = {{ .Values.pod_network }}
 
-    {{ range $k, $v := .Values.ceph.config.global }}
+    {{ range $section_name, $section_data := .Values.ceph.config -}}
+    [{{ $section_name }}]
+    {{ range $k, $v := $section_data -}}
     {{ $k }} = {{ $v }}
     {{ end }}
-
-    [mon]
-    {{ range $k, $v := .Values.ceph.config.mon }}
-    {{ $k }} = {{ $v }}
-    {{ end }}
-
-    [osd]
-    {{ range $k, $v := .Values.ceph.config.osd }}
-    {{ $k }} = {{ $v }}
-    {{ end }}
-
-    [client]
-    {{ range $k, $v := .Values.ceph.config.client }}
-    {{ $k }} = {{ $v }}
-    {{ end }}
-
-    [mds]
-    {{ range $k, $v := .Values.ceph.config.mds }}
-    {{ $k }} = {{ $v }}
     {{ end }}
