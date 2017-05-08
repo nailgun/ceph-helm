@@ -26,7 +26,7 @@ $ echo hello > /mnt/ceph/hello
 ## Fine-tuning
 
 1. Make sure `/storage` directory on hosts survive restarts
-2. Don’t set `ceph-storage` labels to nodes just after installing. Better to first edit ceph-osd DeamonSet's environment variables to match your setup. Default DaemonSet stores everything in `/storage` directory on host, which may be not what you want. Refer to [ceph-docker readme](https://github.com/ceph/ceph-docker/tree/master/ceph-releases/jewel/ubuntu/14.04/daemon#deploy-an-osd) for other options.
+2. Don’t set `ceph-osd` labels to nodes just after installing. Better to first edit ceph-osd DeamonSet's environment variables to match your setup. Default DaemonSet stores everything in `/storage` directory on host, which may be not what you want. Refer to [ceph-docker readme](https://github.com/ceph/ceph-docker/tree/master/ceph-releases/jewel/ubuntu/14.04/daemon#deploy-an-osd) for other options.
 3. Also you may want to run more then one OSD per node (if you have multiple disks). Just copy DaemonSet manifest, rename it and update environment variables. Also you may want to change nodeSelector.
 4. Create custom CRUSH map ruleset to match different hosts (some with SSDs, some with HDDs). Create pools using this rulesets and different *pool size*s. Copy StorageClass object with different name and change `parameters.pool` there.
 5. Optionally store journalfile on separate drive (`OSD_JOURNAL`).

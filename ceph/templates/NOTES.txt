@@ -2,7 +2,7 @@
 $ curl -sSL https://github.com/nailgun/ceph-helm/raw/master/generate_ceph_secrets.py | python | kubectl -n {{ .Release.Namespace }} create -f -
 
 2. Label the nodes that will take part in the Ceph cluster:
-$ kubectl label node NODE_NAME --overwrite ceph-storage=enabled
+$ kubectl label node NODE_NAME --overwrite ceph-osd=enabled
 
 3. Activate namespaces which will use rbd storage classes:
 $ curl -sSL https://github.com/nailgun/ceph-helm/raw/master/activate-namespace.sh | bash /dev/stdin -s {{ .Release.Namespace }} -t NAMESPACE
