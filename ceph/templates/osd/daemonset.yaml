@@ -57,6 +57,10 @@ spec:
               value: {{ .Release.Namespace }}
             - name: CEPH_GET_ADMIN_KEY
               value: '1'
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
             {{ if .Values.image.debug }}
             - name: DEBUG
               value: verbose

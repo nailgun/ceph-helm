@@ -39,8 +39,7 @@ spec:
           lifecycle:
             preStop:
                 exec:
-                  command:
-                    - /remove-mon.sh
+                  command: ['/bin/sh', '-c', 'ceph mon remove $HOSTNAME']
           ports:
             - containerPort: {{ .Values.service.mon.port }}
           env:
@@ -52,6 +51,10 @@ spec:
               value: '4'
             - name: CLUSTER
               value: {{ .Release.Namespace }}
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
             {{ if .Values.image.debug }}
             - name: DEBUG
               value: verbose
