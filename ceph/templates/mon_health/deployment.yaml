@@ -35,6 +35,8 @@ spec:
               value: '1'
             - name: CLUSTER
               value: {{ .Release.Namespace }}
+            - name: K8S_HOST_NETWORK
+              value: '1'  # use nodeName as mon name
             {{ if .Values.image.debug }}
             - name: DEBUG
               value: verbose
