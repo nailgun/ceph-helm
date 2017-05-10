@@ -31,32 +31,32 @@ resources:
   enable_limits: false
   osd:
     requests:
-      memory: 512Mi
-      cpu: 1000m
+      memory: 1024Mi
+      cpu: 2000m
     limits:
       memory: 1024Mi
       cpu: 2000m
   mds:
     replicas: 0
     requests:
-      memory: 10Mi
-      cpu: 250m
+      memory: 50Mi
+      cpu: 500m
     limits:
       memory: 50Mi
       cpu: 500m
   mon:
     replicas: 3
     requests:
-      memory: 50Mi
-      cpu: 1000m
+      memory: 100Mi
+      cpu: 2000m
     limits:
       memory: 100Mi
       cpu: 2000m
   mon_health:
     replicas: 0
     requests:
-      memory: 5Mi
-      cpu: 250m
+      memory: 50Mi
+      cpu: 500m
     limits:
       memory: 50Mi
       cpu: 500m
