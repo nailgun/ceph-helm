@@ -1,3 +1,5 @@
+Save this instructions for your cluster in a file.
+
 1. Generate ceph secrets:
 $ curl -sSL https://github.com/nailgun/ceph-helm/raw/master/generate_ceph_secrets.py | python | kubectl -n {{ .Release.Namespace }} create -f -
 
@@ -6,3 +8,12 @@ $ kubectl label node NODE_NAME --overwrite ceph-osd=enabled
 
 3. Activate namespaces which will use rbd storage classes:
 $ curl -sSL https://github.com/nailgun/ceph-helm/raw/master/activate-namespace.sh | bash /dev/stdin -s {{ .Release.Namespace }} -t NAMESPACE
+
+Tools:
+
+* Device zapping:
+  $ ssh root@HOST
+  $ docker run -e OSD_DEVICE=/dev/DISK -it --rm --privileged=true -v /dev:/dev {{ .Values.image.src }} zap_device
+
+* Ceph management:
+  $ kubectl -n {{ .Release.Namespace }} -it exec $(kubectl -n {{ .Release.Namespace }} get pods -l daemon=mon --template='{{ "{{" }} (index .items 0).metadata.name {{ "}}" }}') -- bash
