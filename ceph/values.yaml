@@ -1,7 +1,7 @@
 image:
   src: docker.io/ceph/daemon:tag-build-master-jewel-ubuntu-14.04
   pull_policy: Always
-  debug: true
+  debug: false
 
 service:
   mon:
@@ -13,7 +13,7 @@ service:
 
 ceph:
   storage:
-    base_dir: /storage
+    base_dir: /mnt/persistent/ceph
   config:
     global:
       public_network: 10.2.0.0/16
@@ -22,13 +22,11 @@ ceph:
       osd_pool_default_size: 3
       osd_pool_default_min_size: 0
     osd:
-      osd_op_threads: 2
-      filestore_op_threads: 2
-      osd_max_object_name_len: 256      # ext4
-      osd_max_object_namespace_len: 64  # ext4
+      osd_op_threads: 8
+      filestore_op_threads: 8
 
 resources:
-  enable_limits: false
+  enable_limits: true
   osd:
     requests:
       memory: 1024Mi
